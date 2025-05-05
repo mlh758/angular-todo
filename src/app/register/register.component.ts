@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import {
   AbstractControl,
@@ -10,6 +10,7 @@ import {
 import { debounceTime, map, timeout } from 'rxjs';
 import { UsersService } from '../services/users.service';
 import { Router } from '@angular/router';
+import { ButtonComponent } from '../button/button.component';
 
 const JobGroup = {
   title: [''],
@@ -43,7 +44,7 @@ function passwordMatchValidator(formGroup: AbstractControl) {
  */
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, ButtonComponent],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })
@@ -51,6 +52,7 @@ export class RegisterComponent {
   fb = inject(FormBuilder);
   userService = inject(UsersService);
   router = inject(Router);
+  destroyRef = inject(DestroyRef);
   form = this.fb.nonNullable.group(
     {
       name: ['', Validators.required],
@@ -84,7 +86,6 @@ export class RegisterComponent {
   );
 
   get phoneNumbers(): FormArray {
-    debugger;
     return this.form.get('phoneNumbers') as FormArray;
   }
 
@@ -108,7 +109,7 @@ export class RegisterComponent {
     }
     this.userService
       .create(user)
-      .pipe(timeout(5000), takeUntilDestroyed())
+      .pipe(timeout(5000), takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => {
           console.log('User created successfully');

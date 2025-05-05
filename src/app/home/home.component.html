@@ -1,10 +1,8 @@
-<div class="top-bar">
-  <div class="logo">
-    <img ngSrc="/assets/logo.png" height="32" width="32" alt="Tasks Logo" />
-    <span>Tasks</span>
-  </div>
+<ng-template #actions>
   <app-button><a class="login-link" routerLink="/login">Login</a></app-button>
-</div>
+</ng-template>
+
+<app-top-bar [actions]="actions"/>
 
 <h2>Welcome!</h2>
 
@@ -14,5 +12,5 @@
 
 <p>Check out your latest tasks below.</p>
 <p>
-  <a routerLink="/tasks">View Tasks</a>
+  <a routerLink="/auth/tasks">View Tasks</a>
 </p>

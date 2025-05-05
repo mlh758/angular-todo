@@ -30,7 +30,11 @@ describe('StorageService', () => {
   });
 
   it('should add a user and retrieve tasks for that user', async () => {
-    const user = { username: 'testuser', email: 'testuser@example.com' };
+    const user = {
+      username: 'testuser',
+      email: 'testuser@example.com',
+      name: 'Test User',
+    };
     const tasks = [
       {
         title: 'Task 1',

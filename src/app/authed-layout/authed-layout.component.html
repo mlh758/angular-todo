@@ -1,0 +1,7 @@
+<ng-template #actions>
+  <app-button><a class="logout-link" routerLink="/logout">Logout</a></app-button>
+</ng-template>
+
+<app-top-bar [actions]="actions"/>
+
+<router-outlet></router-outlet>

@@ -54,6 +54,10 @@ export class StorageService {
   }
 
   private initDB(): void {
+    // in server rendering this will be undefined
+    if (typeof window === 'undefined' || !window.indexedDB) {
+      return;
+    }
     const request = indexedDB.open(this.databaseName, 1);
 
     request.onupgradeneeded = (event: IDBVersionChangeEvent) => {

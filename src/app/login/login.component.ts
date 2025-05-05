@@ -8,7 +8,8 @@ import {
 import { RouterLink, Router } from '@angular/router';
 import { ButtonComponent } from '../button/button.component';
 import { UsersService } from '../services/users.service';
-import { first, tap } from 'rxjs';
+import { first } from 'rxjs';
+import { SessionService } from '../services/session.service';
 
 @Component({
   selector: 'app-login',
@@ -23,6 +24,7 @@ export class LoginComponent {
     ]),
   });
   userService = inject(UsersService);
+  sessionService = inject(SessionService);
   router = inject(Router);
   unableToFindUser = false;
   onSubmit() {
@@ -31,7 +33,8 @@ export class LoginComponent {
       const user$ = this.userService.find(username).pipe(first());
       user$.subscribe((user) => {
         if (user) {
-          this.router.navigate(['/tasks']);
+          this.sessionService.establishSession(user);
+          this.router.navigate(['/auth/tasks']);
         } else {
           this.unableToFindUser = true;
           setTimeout(() => {

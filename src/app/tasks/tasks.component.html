@@ -16,7 +16,7 @@
       @if (task.completed) {
       <td>Done!</td>
       } @else {
-      <td><a routerLink="/tasks{{ task.id }}">Complete!</a></td>
+      <td><a routerLink="/tasks/{{ task.id }}">Complete!</a></td>
       }
     </tr>
     } } @else {
