@@ -1,0 +1,30 @@
+.button {
+  background-color: var(--button-primary-bg-color);
+  border: none;
+  padding: 5px 10px;
+  color: white;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.button:hover {
+  background-color: var(--button-primary-hover-bg-color);
+}
+
+.button:disabled {
+  background-color: var(--button-disabled-bg-color);
+  cursor: not-allowed;
+}
+
+.secondary {
+    background-color: var(--button-secondary-bg-color);
+}
+
+.secondary:hover {
+    background-color: var(--button-secondary-hover-bg-color);
+}
+
+.fullWidth {
+    width: 100%;
+}

@@ -1,0 +1,12 @@
+fieldset {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.error {
+    color: lightcoral;
+    font-size: 0.8em;
+    margin-left: 8px;
+    font-weight: light;
+}

@@ -1,0 +1,28 @@
+@let tasks = tasks$ | async;
+<h2>Your Tasks</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Completed</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    @if (tasks) { @for(task of tasks; track task.id) {
+    <tr>
+      <td>{{ task.title }}</td>
+      <td>{{ task.completed ? "Yes" : "No" }}</td>
+      @if (task.completed) {
+      <td>Done!</td>
+      } @else {
+      <td><a routerLink="/tasks{{ task.id }}">Complete!</a></td>
+      }
+    </tr>
+    } } @else {
+    <tr>
+      <td colspan="3">Loading...</td>
+    </tr>
+    }
+  </tbody>
+</table>

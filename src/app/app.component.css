@@ -1,0 +1,44 @@
+.theme-vars {
+  --button-primary-bg-color: #007bff;
+  --button-primary-hover-bg-color: #0056b3;
+  --button-secondary-bg-color: #6c757d;
+  --button-secondary-hover-bg-color: #5a6268;
+  --button-secondary-bg-color: #6c757d;
+  --button-disabled-bg-color: #d6d6d6;
+  --radius-md: 5px;
+}
+
+form label {
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* Handle label next to input */
+label:has(+ input[required])::after {
+  content: '*';
+  color: red;
+  margin-left: 4px;
+}
+
+/* Handle input inside of label */
+label:has(input[required])::after {
+  content: '*';
+  color: red;
+  margin-left: 4px;
+}
+
+form input {
+  padding: 9px;
+  border: 1px solid #ccc;
+  border-radius: var(--radius-md);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+input.ng-invalid {
+  border: 1px solid red;
+}

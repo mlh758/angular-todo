@@ -1,0 +1,181 @@
+<h2>Register</h2>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="name">Name:</label>
+    <input id="name" formControlName="name" required />
+  </div>
+
+  <div>
+    <label for="username">Username:</label>
+    <input id="username" formControlName="username" required />
+    @if (form.get('username')?.errors) {
+    <span class="error">Username must be at least 5 characters</span>
+    }
+  </div>
+
+  <div>
+    <label for="email">Email:</label>
+    <input id="email" type="email" formControlName="email" required />
+    @if (form.get('email')?.errors) {
+    <span class="error">Please enter a valid email</span>
+    }
+  </div>
+
+  <p>
+    Define a password of at least 12 characters.
+  </p>
+
+  <div>
+    <label for="password">Password:</label>
+    <input id="password" type="password" formControlName="password" required />
+  </div>
+
+  <div>
+    <label for="confirmPassword">Confirm Password:</label>
+    <input
+      id="confirmPassword"
+      type="password"
+      formControlName="confirmPassword"
+      required
+    />
+  </div>
+  @if (form.errors && form.errors['passwordMismatch']) {
+  <span class="error">Passwords do not match</span>
+  }
+
+  <div>
+    <label for="country">Country:</label>
+    <select id="country" formControlName="country">
+      @for (country of countries; track country) {
+      <option [value]="country">{{ country }}</option>
+      }
+    </select>
+  </div>
+
+  <fieldset formGroupName="address">
+    <legend>Address</legend>
+    <div>
+      <label for="street">Street:</label>
+      <input id="street" formControlName="street" />
+    </div>
+    <div>
+      <label for="city">City:</label>
+      <input id="city" formControlName="city" />
+    </div>
+    <div>
+      <label for="state">State:</label>
+      <input id="state" formControlName="state" />
+    </div>
+    <div>
+      <label for="zip">Zip:</label>
+      <input id="zip" formControlName="zip" />
+    </div>
+  </fieldset>
+
+  <fieldset formGroupName="workAddress">
+    <legend>Work Address</legend>
+    <div>
+      <label for="workStreet">Street:</label>
+      <input id="workStreet" formControlName="street" />
+    </div>
+    <div>
+      <label for="workCity">City:</label>
+      <input id="workCity" formControlName="city" />
+    </div>
+    <div>
+      <label for="workState">State:</label>
+      <input id="workState" formControlName="state" />
+    </div>
+    <div>
+      <label for="workZip">Zip:</label>
+      <input id="workZip" formControlName="zip" />
+    </div>
+  </fieldset>
+
+  <fieldset formArrayName="phoneNumbers">
+    <legend>Contact Numbers</legend>
+    @for (phone of phoneNumbers.controls; track $index; let i = $index) {
+    <div>
+      <label for="phoneNumber{{ i }}">Phone Number {{ i + 1 }}:</label>
+      <input [formControlName]="i" type="tel" />
+    </div>
+    }
+  </fieldset>
+
+  <fieldset formGroupName="firstJob">
+    <legend>First Job</legend>
+    <div>
+      <label for="firstJobTitle">Title:</label>
+      <input id="firstJobTitle" formControlName="title" />
+    </div>
+    <div>
+      <label for="firstJobCompany">Company:</label>
+      <input id="firstJobCompany" formControlName="company" />
+    </div>
+    <div>
+      <label for="firstJobStartDate">Start Date:</label>
+      <input id="firstJobStartDate" type="date" formControlName="startDate" />
+    </div>
+    <div>
+      <label for="firstJobEndDate">End Date:</label>
+      <input id="firstJobEndDate" type="date" formControlName="endDate" />
+    </div>
+  </fieldset>
+
+  <fieldset formGroupName="currentJob">
+    <legend>Current Job</legend>
+    <div>
+      <label for="currentJobTitle">Title:</label>
+      <input id="currentJobTitle" formControlName="title" />
+    </div>
+    <div>
+      <label for="currentJobCompany">Company:</label>
+      <input id="currentJobCompany" formControlName="company" />
+    </div>
+    <div>
+      <label for="currentJobStartDate">Start Date:</label>
+      <input id="currentJobStartDate" type="date" formControlName="startDate" />
+    </div>
+    <div>
+      <label for="currentJobEndDate">End Date:</label>
+      <input id="currentJobEndDate" type="date" formControlName="endDate" />
+    </div>
+  </fieldset>
+
+  <div>
+    <label>
+      <input type="checkbox" formControlName="agreeToTerms" required />
+      Agree to Terms
+    </label>
+  </div>
+
+  <div>
+    <label>
+      <input type="checkbox" formControlName="agreeToPrivacy" required />
+      Agree to Privacy Policy
+    </label>
+  </div>
+
+  <div>
+    <label>
+      <input type="checkbox" formControlName="agreeToMarketing" />
+      Agree to Marketing Emails
+    </label>
+  </div>
+
+  <div>
+    <label>
+      <input type="checkbox" formControlName="agreeToThirdParty" />
+      Agree to Third-Party Sharing
+    </label>
+  </div>
+
+  @if (formError()) {
+    <p class="error">
+      Review the form for errors or missing information.
+    </p>
+  }
+
+  <button type="submit" [disabled]="!form.valid">Register</button>
+</form>
