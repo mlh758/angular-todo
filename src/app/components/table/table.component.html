@@ -1,0 +1,28 @@
+<ng-template #defaultRow let-row="row" let-field="field">
+  <td scope="row">
+    {{ row[field] }}
+  </td>
+</ng-template>
+
+<div >
+  <table >
+    <thead>
+      <tr>
+        @for (column of columns(); track $index) {
+        <th scope="col">
+          {{column}}
+        </th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (row of rows(); track getRowId(row)) {
+      <tr >
+        @for (field of fields(); track $index) {
+         <ng-container [ngTemplateOutlet]="renderRow(field)" [ngTemplateOutletContext]="{row: row, field: field}" />
+        }
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>

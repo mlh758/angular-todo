@@ -6,10 +6,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
-import { ButtonComponent } from '../button/button.component';
-import { UsersService } from '../services/users.service';
+import { ButtonComponent } from '../../components/button/button.component';
+import { UsersService } from '../../services/users.service';
 import { first } from 'rxjs';
-import { SessionService } from '../services/session.service';
+import { SessionService } from '../../services/session.service';
 
 @Component({
   selector: 'app-login',

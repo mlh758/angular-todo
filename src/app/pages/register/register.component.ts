@@ -8,9 +8,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { debounceTime, map, timeout } from 'rxjs';
-import { UsersService } from '../services/users.service';
+import { UsersService } from '../../services/users.service';
 import { Router } from '@angular/router';
-import { ButtonComponent } from '../button/button.component';
+import { ButtonComponent } from '../../components/button/button.component';
 
 const JobGroup = {
   title: [''],

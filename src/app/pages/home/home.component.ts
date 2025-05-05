@@ -1,7 +1,7 @@
 import { Component, TemplateRef, viewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { ButtonComponent } from '../button/button.component';
-import { TopBarComponent } from '../top-bar/top-bar.component';
+import { ButtonComponent } from '../../components/button/button.component';
+import { TopBarComponent } from '../../components/top-bar/top-bar.component';
 
 @Component({
   selector: 'app-home',

@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 
 import { HomeComponent } from './home.component';
-import { DATABASE_NAME } from '../services/storage.service';
+import { DATABASE_NAME } from '../../services/storage.service';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;

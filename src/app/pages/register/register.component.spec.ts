@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RegisterComponent } from './register.component';
-import { DATABASE_NAME } from '../services/storage.service';
+import { DATABASE_NAME } from '../../services/storage.service';
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;

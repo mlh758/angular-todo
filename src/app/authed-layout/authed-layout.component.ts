@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
-import { TopBarComponent } from '../top-bar/top-bar.component';
-import { ButtonComponent } from '../button/button.component';
+import { TopBarComponent } from '../components/top-bar/top-bar.component';
+import { ButtonComponent } from '../components/button/button.component';
 
 @Component({
   selector: 'app-authed-layout',
