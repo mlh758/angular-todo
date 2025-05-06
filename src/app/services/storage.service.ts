@@ -30,7 +30,6 @@ export interface User {
  * It's a little simplistic for the example, you probably wouldn't want to
  * define all your types in one file like this.
  *
- * Also there is a race on initDB connecting and the first add/get call.
  */
 @Injectable({
   providedIn: 'root',
@@ -38,12 +37,11 @@ export interface User {
 export class StorageService {
   private _db: IDBDatabase | null = null;
   // Anyone that subscribes to this will get the database when it's ready
-  private dbReadySubject = new AsyncSubject<IDBDatabase>();
-  public dbReady$ = this.dbReadySubject.asObservable();
+  private dbReadySubject$ = new AsyncSubject<IDBDatabase>();
   private databaseName = inject(DATABASE_NAME);
 
   constructor() {
-    this.initDB();
+    this.initDB().subscribe(this.dbReadySubject$);
   }
 
   get db(): IDBDatabase {
@@ -53,60 +51,70 @@ export class StorageService {
     return this._db;
   }
 
-  private initDB(): void {
-    // in server rendering this will be undefined
-    if (typeof window === 'undefined' || !window.indexedDB) {
-      console.warn('skipping initDB, no indexedDB support');
-      return;
-    }
-    const request = indexedDB.open(this.databaseName, 1);
-
-    request.onupgradeneeded = (event: IDBVersionChangeEvent) => {
-      const db = (event.target as IDBOpenDBRequest).result;
-
-      if (!db.objectStoreNames.contains('tasks')) {
-        const tasksStore = db.createObjectStore('tasks', {
-          keyPath: 'id',
-          autoIncrement: true,
-        });
-        tasksStore.createIndex('user', 'user', { unique: false });
+  private initDB(): Observable<IDBDatabase> {
+    return new Observable((observer) => {
+      // in server rendering this will be undefined
+      if (typeof window === 'undefined' || !window.indexedDB) {
+        console.warn('skipping initDB, no indexedDB support');
+        observer.complete();
+        return;
       }
 
-      if (!db.objectStoreNames.contains('users')) {
-        db.createObjectStore('users', { keyPath: 'username' });
-      }
-    };
+      const request = indexedDB.open(this.databaseName, 1);
 
-    request.onsuccess = (event: Event) => {
-      this._db = (event.target as IDBOpenDBRequest).result;
-      this.dbReadySubject.next(this._db);
-      this.dbReadySubject.complete();
-    };
+      request.onupgradeneeded = (event: IDBVersionChangeEvent) => {
+        const db = (event.target as IDBOpenDBRequest).result;
 
-    request.onerror = (event: Event) => {
-      console.error(
-        'Database error:',
-        (event.target as IDBOpenDBRequest).error
-      );
-    };
+        if (!db.objectStoreNames.contains('tasks')) {
+          const tasksStore = db.createObjectStore('tasks', {
+            keyPath: 'id',
+            autoIncrement: true,
+          });
+          tasksStore.createIndex('user', 'user', { unique: false });
+        }
+
+        if (!db.objectStoreNames.contains('users')) {
+          db.createObjectStore('users', { keyPath: 'username' });
+        }
+      };
+
+      request.onsuccess = (event: Event) => {
+        this._db = (event.target as IDBOpenDBRequest).result;
+        observer.next(this._db);
+        observer.complete();
+      };
+
+      request.onerror = (event: Event) => {
+        console.error(
+          'Database error:',
+          (event.target as IDBOpenDBRequest).error
+        );
+        observer.error((event.target as IDBOpenDBRequest).error);
+      };
+    });
   }
 
   public add(storeName: Store.TASKS, value: NewTask): Observable<void>;
   public add(storeName: Store.USERS, value: User): Observable<void>;
   public add<T>(storeName: Store, value: T): Observable<void> {
     return new Observable((observer) => {
-      const transaction = this.db.transaction(storeName, 'readwrite');
-      const store = transaction.objectStore(storeName);
-      const request = store.add(value);
+      this.dbReadySubject$.subscribe({
+        next: (db) => {
+          const transaction = db.transaction(storeName, 'readwrite');
+          const store = transaction.objectStore(storeName);
+          const request = store.add(value);
 
-      request.onsuccess = () => {
-        observer.next();
-        observer.complete();
-      };
+          request.onsuccess = () => {
+            observer.next();
+            observer.complete();
+          };
 
-      request.onerror = (event: Event) => {
-        observer.error((event.target as IDBRequest).error);
-      };
+          request.onerror = (event: Event) => {
+            observer.error((event.target as IDBRequest).error);
+          };
+        },
+        error: (err) => observer.error(err),
+      });
     });
   }
 
@@ -117,45 +125,57 @@ export class StorageService {
     key: K
   ): Observable<T | undefined> {
     return new Observable((observer) => {
-      const transaction = this.db.transaction(storeName, 'readonly');
-      const store = transaction.objectStore(storeName);
-      const request = store.get(key);
+      this.dbReadySubject$.subscribe({
+        next: (db) => {
+          const transaction = db.transaction(storeName, 'readonly');
+          const store = transaction.objectStore(storeName);
+          const request = store.get(key);
 
-      request.onsuccess = (event: Event) => {
-        observer.next((event.target as IDBRequest).result as T | undefined);
-        observer.complete();
-      };
+          request.onsuccess = (event: Event) => {
+            observer.next((event.target as IDBRequest).result as T | undefined);
+            observer.complete();
+          };
 
-      request.onerror = (event: Event) => {
-        observer.error((event.target as IDBRequest).error);
-      };
+          request.onerror = (event: Event) => {
+            observer.error((event.target as IDBRequest).error);
+          };
+        },
+        error: (err) => observer.error(err),
+      });
     });
   }
 
   public getUserTasks(username: string): Observable<Task> {
     return new Observable((observer) => {
-      const transaction = this.db.transaction(Store.TASKS, 'readonly');
-      const store = transaction.objectStore(Store.TASKS);
-      const index = store.index('user');
-      const request = index.openCursor(username);
       let stopping = false;
+      this.dbReadySubject$.subscribe({
+        next: (db) => {
+          const transaction = db.transaction(Store.TASKS, 'readonly');
+          const store = transaction.objectStore(Store.TASKS);
+          const index = store.index('user');
+          const request = index.openCursor(username);
 
-      request.onsuccess = (event: Event) => {
-        if (stopping) {
-          return;
-        }
-        const cursor = (event.target as IDBRequest<IDBCursorWithValue>).result;
-        if (cursor) {
-          observer.next(cursor.value as Task);
-          cursor.continue();
-        } else {
-          observer.complete();
-        }
-      };
+          request.onsuccess = (event: Event) => {
+            if (stopping) {
+              observer.complete();
+              return;
+            }
+            const cursor = (event.target as IDBRequest<IDBCursorWithValue>)
+              .result;
+            if (cursor) {
+              observer.next(cursor.value as Task);
+              cursor.continue();
+            } else {
+              observer.complete();
+            }
+          };
 
-      request.onerror = (event: Event) => {
-        observer.error((event.target as IDBRequest).error);
-      };
+          request.onerror = (event: Event) => {
+            observer.error((event.target as IDBRequest).error);
+          };
+        },
+        error: (err) => observer.error(err),
+      });
       return () => {
         stopping = true;
       };

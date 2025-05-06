@@ -6,15 +6,12 @@ import { lastValueFrom } from 'rxjs';
 describe('StorageService', () => {
   let service: StorageService;
 
-  beforeAll(async () => {
+  beforeAll(() => {
     TestBed.configureTestingModule({
       providers: [{ provide: DATABASE_NAME, useValue: 'TestDatabase' }],
     });
 
     service = TestBed.inject(StorageService);
-
-    // Wait for the database to be ready before running tests
-    await lastValueFrom(service.dbReady$);
   });
 
   afterEach(async () => {
