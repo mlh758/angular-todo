@@ -3,10 +3,11 @@ import { TasksService } from '../../services/tasks.service';
 import { RouterLink } from '@angular/router';
 import { UserSignal } from '../../services/session.service';
 import { rxResource } from '@angular/core/rxjs-interop';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-tasks',
-  imports: [RouterLink],
+  imports: [RouterLink, DatePipe],
   templateUrl: './tasks.component.html',
   styleUrl: './tasks.component.css',
 })

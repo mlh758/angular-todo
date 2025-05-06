@@ -1,0 +1,24 @@
+<h2>Create New Task</h2>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="title">Title:</label>
+    <input id="title" formControlName="title" required />
+  </div>
+
+  <div>
+    <label for="description">Description:</label>
+    <textarea id="description" formControlName="description" required></textarea>
+  </div>
+
+  <div>
+    <label for="dueDate">Due Date:</label>
+    <input id="dueDate" type="date" formControlName="dueDate" />
+  </div>
+
+  <app-button type="submit" [disabled]="!form.valid">Create Task</app-button>
+</form>
+
+@if (submitError) {
+  <p>Failed to create task!</p>
+}

@@ -1,8 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { defaultIfEmpty, delay, filter, map, Observable, of, scan } from 'rxjs';
-import { StorageService, Store, Task } from './storage.service';
+import { NewTask, StorageService, Store, Task } from './storage.service';
 
-export { type Task } from './storage.service';
+export { type Task, type NewTask } from './storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -26,5 +26,9 @@ export class TasksService {
         return acc.concat(task);
       }, [])
     );
+  }
+
+  addTask(task: NewTask): Observable<void> {
+    return this.storageService.add(Store.TASKS, task).pipe(delay(500));
   }
 }

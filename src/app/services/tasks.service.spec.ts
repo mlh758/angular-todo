@@ -1,12 +1,15 @@
 import { TestBed } from '@angular/core/testing';
 
 import { TasksService } from './tasks.service';
+import { provideTestDbName } from './storage.service';
 
 describe('TasksService', () => {
   let service: TasksService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [provideTestDbName()],
+    });
     service = TestBed.inject(TasksService);
   });
 

@@ -1,5 +1,10 @@
 import { TestBed } from '@angular/core/testing';
-import { StorageService, DATABASE_NAME, Store } from './storage.service';
+import {
+  StorageService,
+  DATABASE_NAME,
+  Store,
+  provideTestDbName,
+} from './storage.service';
 import { toArray } from 'rxjs/operators';
 import { lastValueFrom } from 'rxjs';
 
@@ -8,7 +13,7 @@ describe('StorageService', () => {
 
   beforeAll(() => {
     TestBed.configureTestingModule({
-      providers: [{ provide: DATABASE_NAME, useValue: 'TestDatabase' }],
+      providers: [provideTestDbName()],
     });
 
     service = TestBed.inject(StorageService);

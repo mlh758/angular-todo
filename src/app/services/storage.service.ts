@@ -3,6 +3,13 @@ import { AsyncSubject, Observable } from 'rxjs';
 
 export const DATABASE_NAME = new InjectionToken<string>('name of indexedDB');
 
+export const provideTestDbName = () => {
+  return {
+    provide: DATABASE_NAME,
+    useValue: 'test-db',
+  };
+};
+
 export enum Store {
   TASKS = 'tasks',
   USERS = 'users',
