@@ -4,10 +4,11 @@ import { RouterLink } from '@angular/router';
 import { UserSignal } from '../../services/session.service';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { DatePipe } from '@angular/common';
+import { LoadingSpinnerComponent } from '../../components/loading-spinner/loading-spinner.component';
 
 @Component({
   selector: 'app-tasks',
-  imports: [RouterLink, DatePipe],
+  imports: [RouterLink, DatePipe, LoadingSpinnerComponent],
   templateUrl: './tasks.component.html',
   styleUrl: './tasks.component.css',
 })

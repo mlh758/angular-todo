@@ -20,7 +20,7 @@
     }
     @if (tasksResource.isLoading()) {
     <tr>
-      <td colspan="4">Loading tasks...</td>
+      <td colspan="4"><app-loading-spinner /></td>
     </tr>
     }
     @for (task of tasksResource.value(); track task.id) {
