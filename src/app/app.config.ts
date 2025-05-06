@@ -7,6 +7,7 @@ import {
   withEventReplay,
 } from '@angular/platform-browser';
 import { DATABASE_NAME } from './services/storage.service';
+import { provideUserSignal } from './providers/user-signal.provider';
 /**
  * You can provide app wide dependencies here for the DI system, not
  * just Angular framework options.
@@ -16,6 +17,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
+    provideUserSignal(),
     { provide: DATABASE_NAME, useValue: 'ssr-example' },
   ],
 };

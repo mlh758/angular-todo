@@ -56,6 +56,7 @@ export class StorageService {
   private initDB(): void {
     // in server rendering this will be undefined
     if (typeof window === 'undefined' || !window.indexedDB) {
+      console.warn('skipping initDB, no indexedDB support');
       return;
     }
     const request = indexedDB.open(this.databaseName, 1);

@@ -1,5 +1,8 @@
-@let tasks = tasks$ | async;
 <h2>Your Tasks</h2>
+
+@if (tasksResource.isLoading()) {
+<p>Loading tasks...</p>
+}
 <table>
   <thead>
     <tr>
@@ -8,8 +11,14 @@
       <th>Action</th>
     </tr>
   </thead>
+
   <tbody>
-    @if (tasks) { @for(task of tasks; track task.id) {
+    @if (tasksResource.error(); as error) {
+    <tr>
+      <td colspan="3">Error loading tasks: {{ error }}</td>
+    </tr>
+    }
+    @for (task of tasksResource.value(); track task.id) {
     <tr>
       <td>{{ task.title }}</td>
       <td>{{ task.completed ? "Yes" : "No" }}</td>
@@ -18,10 +27,6 @@
       } @else {
       <td><a routerLink="/tasks/{{ task.id }}">Complete!</a></td>
       }
-    </tr>
-    } } @else {
-    <tr>
-      <td colspan="3">Loading...</td>
     </tr>
     }
   </tbody>

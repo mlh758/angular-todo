@@ -1,36 +1,29 @@
-import { Injectable } from '@angular/core';
-import { delay, of } from 'rxjs';
+import { inject, Injectable } from '@angular/core';
+import { delay, filter, map, Observable, of, scan } from 'rxjs';
+import { StorageService, Store, Task } from './storage.service';
 
-const mockTasks = [
-  {
-    id: 1,
-    title: 'Task 1',
-    description: 'Description for Task 1',
-    completed: false,
-  },
-  {
-    id: 2,
-    title: 'Task 2',
-    description: 'Description for Task 2',
-    completed: true,
-  },
-  {
-    id: 3,
-    title: 'Task 3',
-    description: 'Description for Task 3',
-    completed: false,
-  },
-];
+export { type Task } from './storage.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TasksService {
-  getTasks() {
-    return of(mockTasks).pipe(delay(500));
+  storageService = inject(StorageService);
+
+  getTask(username: string, id: number) {
+    return this.storageService.get(Store.TASKS, id).pipe(
+      filter((task) => task?.user === username),
+      delay(500)
+    );
   }
-  getTaskById(id: number) {
-    const task = mockTasks.find((task) => task.id === id);
-    return of(task);
+
+  getTasks(username: string): Observable<Task[]> {
+    return this.storageService.getUserTasks(username).pipe(
+      map((task) => [task]),
+      delay(500),
+      scan((acc: Task[], task) => {
+        return acc.concat(task);
+      }, [])
+    );
   }
 }

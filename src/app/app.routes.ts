@@ -16,7 +16,7 @@ export const routes: Routes = [
     children: [
       {
         path: 'tasks',
-        // Lazy load this component so split the bundle
+        // Lazy load components to split the bundle
         loadComponent: () =>
           import('./pages/tasks/tasks.component').then((m) => m.TasksComponent),
         title: 'Tasks',

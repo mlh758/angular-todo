@@ -1,5 +1,12 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, InjectionToken, Signal, signal } from '@angular/core';
 import { User } from './storage.service';
+
+/**
+ * Provides an alternative way to inject the current user directly.
+ * Can provide more convenient access when we know we're in an authenticated
+ * context
+ */
+export const UserSignal = new InjectionToken<Signal<User>>('UserSignal');
 /**
  * Pretend this is an http service that fetches the current user from the server
  * based on a session cookie or a stored token.
@@ -16,6 +23,9 @@ export class SessionService {
   currentUser = this._currentUser.asReadonly();
 
   constructor() {
+    if (typeof window === 'undefined') {
+      return;
+    }
     const storedUser = window.sessionStorage.getItem('currentUser');
     if (storedUser) {
       this._currentUser.set(JSON.parse(storedUser));
