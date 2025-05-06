@@ -6,6 +6,7 @@ import { AuthedLayoutComponent } from './authed-layout/authed-layout.component';
 import { sessionResolver } from './resolvers/session.resolver';
 import { LogoutComponent } from './pages/logout/logout.component';
 import { FormComponent } from './pages/tasks/new/form/form.component';
+import { ShowComponent as ShowTaskComponent } from './pages/tasks/show/show.component';
 
 export const routes: Routes = [
   {
@@ -26,6 +27,11 @@ export const routes: Routes = [
         path: 'tasks/new',
         component: FormComponent,
         title: 'New Task',
+      },
+      {
+        path: 'tasks/:id',
+        component: ShowTaskComponent,
+        title: 'Task',
       },
     ],
   },

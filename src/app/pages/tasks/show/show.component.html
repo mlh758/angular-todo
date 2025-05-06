@@ -1,0 +1,18 @@
+<h2>Task Details</h2>
+
+@if (taskRequest.hasValue()) {
+  @let task = taskRequest.value();
+  <p><strong>Title:</strong> {{ task.title }}</p>
+  <p><strong>Description:</strong> {{ task.description }}</p>
+  <p><strong>Due Date:</strong> {{ task.dueDate | date }}</p>
+  <app-button (click)="completeTask()">Complete now!</app-button>
+}
+
+@if (taskRequest.isLoading()) {
+  <app-loading-spinner />
+}
+
+@if (taskRequest.error()) {
+  <p>Error loading task: {{ taskRequest.error() }}</p>
+  <p>Are you sure this task exists?</p>
+}
