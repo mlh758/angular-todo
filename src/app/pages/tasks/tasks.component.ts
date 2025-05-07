@@ -6,6 +6,7 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { DatePipe } from '@angular/common';
 import { LoadingSpinnerComponent } from '../../components/loading-spinner/loading-spinner.component';
 import { TaskCompletionPipe } from '../../pipes/task-completion.pipe';
+import { TableComponent } from '../../components/table/table.component';
 
 @Component({
   selector: 'app-tasks',

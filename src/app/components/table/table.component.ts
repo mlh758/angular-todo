@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 
 type Identifier<R> = (val: R) => string | number;
 
+/**
+ * Included as a demo for using templates a bunch in a component
+ */
 @Component({
   selector: 'app-table',
   imports: [CommonModule],
