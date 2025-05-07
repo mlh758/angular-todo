@@ -1,5 +1,5 @@
 import { Injectable, InjectionToken, inject } from '@angular/core';
-import { AsyncSubject, Observable } from 'rxjs';
+import { AsyncSubject, map, Observable } from 'rxjs';
 
 export const DATABASE_NAME = new InjectionToken<string>('name of indexedDB');
 
@@ -101,27 +101,44 @@ export class StorageService {
     });
   }
 
-  public add(storeName: Store.TASKS, value: NewTask): Observable<void>;
-  public add(storeName: Store.USERS, value: User): Observable<void>;
-  public add<T>(storeName: Store, value: T): Observable<void> {
+  public beginTransaction<T>(
+    storeName: Store,
+    mode: IDBTransactionMode = 'readonly',
+    callback: (transaction: IDBObjectStore) => IDBRequest
+  ): Observable<T> {
     return new Observable((observer) => {
       this.dbReadySubject$.subscribe({
         next: (db) => {
-          const transaction = db.transaction(storeName, 'readwrite');
+          const transaction = db.transaction(storeName, mode);
           const store = transaction.objectStore(storeName);
-          const request = store.add(value);
-
-          request.onsuccess = () => {
-            observer.next();
+          const request = callback(store);
+          request.onsuccess = (event: Event) => {
+            const result = (event.target as IDBRequest).result;
+            observer.next(result as T);
             observer.complete();
           };
-
           request.onerror = (event: Event) => {
             observer.error((event.target as IDBRequest).error);
           };
         },
         error: (err) => observer.error(err),
       });
+    });
+  }
+
+  public add(storeName: Store.TASKS, value: NewTask): Observable<void>;
+  public add(storeName: Store.USERS, value: User): Observable<void>;
+  public add<T>(storeName: Store, value: T): Observable<void> {
+    return this.beginTransaction<void>(storeName, 'readwrite', (store) => {
+      return store.add(value);
+    });
+  }
+
+  public put(storeName: Store.TASKS, value: Task): Observable<void>;
+  public put(storeName: Store.USERS, value: User): Observable<void>;
+  public put<T>(storeName: Store, value: T): Observable<void> {
+    return this.beginTransaction<void>(storeName, 'readwrite', (store) => {
+      return store.put(value);
     });
   }
 
@@ -131,27 +148,19 @@ export class StorageService {
     storeName: Store,
     key: K
   ): Observable<T | undefined> {
-    return new Observable((observer) => {
-      this.dbReadySubject$.subscribe({
-        next: (db) => {
-          const transaction = db.transaction(storeName, 'readonly');
-          const store = transaction.objectStore(storeName);
-          const request = store.get(key);
-
-          request.onsuccess = (event: Event) => {
-            observer.next((event.target as IDBRequest).result as T | undefined);
-            observer.complete();
-          };
-
-          request.onerror = (event: Event) => {
-            observer.error((event.target as IDBRequest).error);
-          };
-        },
-        error: (err) => observer.error(err),
-      });
-    });
+    return this.beginTransaction<T | undefined>(
+      storeName,
+      'readonly',
+      (store) => {
+        return store.get(key);
+      }
+    );
   }
-
+  /**
+   * This doesn't have to be using a cursor, there is a function to get all
+   * results in an array. This is a good example of how Observables can emit
+   * multiple values over time.
+   */
   public getUserTasks(username: string): Observable<Task> {
     return new Observable((observer) => {
       let stopping = false;

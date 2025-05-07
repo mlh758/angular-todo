@@ -29,6 +29,13 @@ export class ShowComponent {
   });
 
   completeTask() {
-    console.log('Task completed!');
+    const task = this.taskRequest.value();
+    if (task) {
+      this.tasksService
+        .updateTask({ ...task, completed: true })
+        .subscribe(() => {
+          this.taskRequest.reload();
+        });
+    }
   }
 }

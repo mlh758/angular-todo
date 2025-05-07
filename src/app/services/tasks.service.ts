@@ -1,14 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import {
-  defaultIfEmpty,
-  delay,
-  filter,
-  map,
-  Observable,
-  of,
-  scan,
-  tap,
-} from 'rxjs';
+import { defaultIfEmpty, delay, filter, map, Observable, scan } from 'rxjs';
 import { NewTask, StorageService, Store, Task } from './storage.service';
 
 export { type Task, type NewTask } from './storage.service';
@@ -21,7 +12,6 @@ export class TasksService {
 
   getTask(username: string, id: number) {
     return this.storageService.get(Store.TASKS, id).pipe(
-      tap((task) => console.log('Task:', task)),
       filter((task) => task?.user === username),
       delay(500)
     );
@@ -29,13 +19,17 @@ export class TasksService {
 
   getTasks(username: string): Observable<Task[]> {
     return this.storageService.getUserTasks(username).pipe(
+      delay(500),
       map((task) => [task]),
       defaultIfEmpty([]),
-      delay(500),
       scan((acc: Task[], task) => {
         return acc.concat(task);
       }, [])
     );
+  }
+
+  updateTask(task: Task): Observable<void> {
+    return this.storageService.put(Store.TASKS, task).pipe(delay(500));
   }
 
   addTask(task: NewTask): Observable<void> {
