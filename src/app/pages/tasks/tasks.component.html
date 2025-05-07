@@ -1,10 +1,10 @@
 <h2>Your Tasks</h2>
 
-<a routerLink="/auth/tasks/new">Create New Task</a>
+<a routerLink="/auth/tasks/new" i18n>Create New Task</a>
 
 <table>
   <thead>
-    <tr>
+    <tr i18n>
       <th>Title</th>
       <th>Completed</th>
       <th>Due Date</th>
@@ -15,7 +15,7 @@
   <tbody>
     @if (tasksResource.error(); as error) {
     <tr>
-      <td colspan="4">Error loading tasks: {{ error }}</td>
+      <td colspan="4" i18n>Error loading tasks: {{ error }}</td>
     </tr>
     }
     @if (tasksResource.isLoading()) {
@@ -29,9 +29,9 @@
       <td>{{ task.completed ? "Yes" : "No" }}</td>
       <td>{{task.dueDate | date}}</td>
       @if (task.completed) {
-      <td>Done!</td>
+      <td i18n>Done!</td>
       } @else {
-      <td><a routerLink="/auth/tasks/{{ task.id }}">Complete!</a></td>
+      <td><a i18n routerLink="/auth/tasks/{{ task.id }}">Complete!</a></td>
       }
     </tr>
     }

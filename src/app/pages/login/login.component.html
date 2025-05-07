@@ -2,21 +2,21 @@
 
 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
   <div>
-    <label for="username">Username:</label>
+    <label i18n for="username">Username:</label>
     <input id="username" formControlName="username" required />
   </div>
-  <app-button type="submit" [disabled]="!loginForm.valid">Login</app-button>
+  <app-button i18n type="submit" [disabled]="!loginForm.valid">Login</app-button>
 </form>
 @if(unableToFindUser) {
 <aside>
   <p>
-    <strong>Unable to find user</strong>
+    <strong i18n>Unable to find user</strong>
   </p>
-  <p>Please check your username and try again.</p>
+  <p i18n>Please check your username and try again.</p>
 </aside>
 }
 
-<p>Not already a member? <a routerLink="/register">Register today!</a></p>
+<p i18n>Not already a member? <a routerLink="/register" >Register today!</a></p>
 <p>
-  <a routerLink="/">Back to home</a>
+  <a i18n routerLink="/">Back to home</a>
 </p>

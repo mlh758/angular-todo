@@ -1,38 +1,38 @@
-<h2>Register</h2>
+<h2 i18n>Register</h2>
 
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <div>
-    <label for="name">Name:</label>
+    <label for="name" i18n>Name:</label>
     <input id="name" formControlName="name" required />
   </div>
 
   <div>
-    <label for="username">Username:</label>
+    <label for="username" i18n>Username:</label>
     <input id="username" formControlName="username" required />
     @if (form.get('username')?.errors) {
-    <span class="error">Username must be at least 5 characters</span>
+    <span class="error" i18n>Username must be at least 5 characters</span>
     }
   </div>
 
   <div>
-    <label for="email">Email:</label>
+    <label for="email" i18n>Email:</label>
     <input id="email" type="email" formControlName="email" required />
     @if (form.get('email')?.errors) {
-    <span class="error">Please enter a valid email</span>
+    <span class="error" i18n>Please enter a valid email</span>
     }
   </div>
 
-  <p>
+  <p i18n>
     Define a password of at least 12 characters.
   </p>
 
   <div>
-    <label for="password">Password:</label>
+    <label for="password" i18n>Password:</label>
     <input id="password" type="password" formControlName="password" required />
   </div>
 
   <div>
-    <label for="confirmPassword">Confirm Password:</label>
+    <label for="confirmPassword" i18n>Confirm Password:</label>
     <input
       id="confirmPassword"
       type="password"
@@ -41,11 +41,11 @@
     />
   </div>
   @if (form.errors && form.errors['passwordMismatch']) {
-  <span class="error">Passwords do not match</span>
+  <span class="error" i18n>Passwords do not match</span>
   }
 
   <div>
-    <label for="country">Country:</label>
+    <label for="country" i18n>Country:</label>
     <select id="country" formControlName="country">
       @for (country of countries; track country) {
       <option [value]="country">{{ country }}</option>
@@ -54,128 +54,128 @@
   </div>
 
   <fieldset formGroupName="address">
-    <legend>Address</legend>
+    <legend i18n>Address</legend>
     <div>
-      <label for="street">Street:</label>
+      <label for="street" i18n>Street:</label>
       <input id="street" formControlName="street" />
     </div>
     <div>
-      <label for="city">City:</label>
+      <label for="city" i18n>City:</label>
       <input id="city" formControlName="city" />
     </div>
     <div>
-      <label for="state">State:</label>
+      <label for="state" i18n>State:</label>
       <input id="state" formControlName="state" />
     </div>
     <div>
-      <label for="zip">Zip:</label>
+      <label for="zip" i18n>Zip:</label>
       <input id="zip" formControlName="zip" />
     </div>
   </fieldset>
 
   <fieldset formGroupName="workAddress">
-    <legend>Work Address</legend>
+    <legend i18n>Work Address</legend>
     <div>
-      <label for="workStreet">Street:</label>
+      <label for="workStreet" i18n>Street:</label>
       <input id="workStreet" formControlName="street" />
     </div>
     <div>
-      <label for="workCity">City:</label>
+      <label for="workCity" i18n>City:</label>
       <input id="workCity" formControlName="city" />
     </div>
     <div>
-      <label for="workState">State:</label>
+      <label for="workState" i18n>State:</label>
       <input id="workState" formControlName="state" />
     </div>
     <div>
-      <label for="workZip">Zip:</label>
+      <label for="workZip" i18n>Zip:</label>
       <input id="workZip" formControlName="zip" />
     </div>
   </fieldset>
 
   <fieldset formArrayName="phoneNumbers">
-    <legend>Contact Numbers</legend>
+    <legend i18n>Contact Numbers</legend>
     @for (phone of phoneNumbers.controls; track $index; let i = $index) {
     <div>
-      <label for="phoneNumber{{ i }}">Phone Number {{ i + 1 }}:</label>
+      <label for="phoneNumber{{ i }}" i18n>Phone Number {{ i + 1 }}:</label>
       <input [formControlName]="i" type="tel" />
     </div>
     }
   </fieldset>
 
   <fieldset formGroupName="firstJob">
-    <legend>First Job</legend>
+    <legend i18n>First Job</legend>
     <div>
-      <label for="firstJobTitle">Title:</label>
+      <label for="firstJobTitle" i18n>Title:</label>
       <input id="firstJobTitle" formControlName="title" />
     </div>
     <div>
-      <label for="firstJobCompany">Company:</label>
+      <label for="firstJobCompany" i18n>Company:</label>
       <input id="firstJobCompany" formControlName="company" />
     </div>
     <div>
-      <label for="firstJobStartDate">Start Date:</label>
+      <label for="firstJobStartDate" i18n>Start Date:</label>
       <input id="firstJobStartDate" type="date" formControlName="startDate" />
     </div>
     <div>
-      <label for="firstJobEndDate">End Date:</label>
+      <label for="firstJobEndDate" i18n>End Date:</label>
       <input id="firstJobEndDate" type="date" formControlName="endDate" />
     </div>
   </fieldset>
 
   <fieldset formGroupName="currentJob">
-    <legend>Current Job</legend>
+    <legend i18n>Current Job</legend>
     <div>
-      <label for="currentJobTitle">Title:</label>
+      <label for="currentJobTitle" i18n>Title:</label>
       <input id="currentJobTitle" formControlName="title" />
     </div>
     <div>
-      <label for="currentJobCompany">Company:</label>
+      <label for="currentJobCompany" i18n>Company:</label>
       <input id="currentJobCompany" formControlName="company" />
     </div>
     <div>
-      <label for="currentJobStartDate">Start Date:</label>
+      <label for="currentJobStartDate" i18n>Start Date:</label>
       <input id="currentJobStartDate" type="date" formControlName="startDate" />
     </div>
     <div>
-      <label for="currentJobEndDate">End Date:</label>
+      <label for="currentJobEndDate" i18n>End Date:</label>
       <input id="currentJobEndDate" type="date" formControlName="endDate" />
     </div>
   </fieldset>
 
   <div>
-    <label>
+    <label i18n>
       <input type="checkbox" formControlName="agreeToTerms" required />
       Agree to Terms
     </label>
   </div>
 
   <div>
-    <label>
+    <label i18n>
       <input type="checkbox" formControlName="agreeToPrivacy" required />
       Agree to Privacy Policy
     </label>
   </div>
 
   <div>
-    <label>
+    <label i18n>
       <input type="checkbox" formControlName="agreeToMarketing" />
       Agree to Marketing Emails
     </label>
   </div>
 
   <div>
-    <label>
+    <label i18n>
       <input type="checkbox" formControlName="agreeToThirdParty" />
       Agree to Third-Party Sharing
     </label>
   </div>
 
   @if (formError()) {
-    <p class="error">
+    <p class="error" i18n>
       Review the form for errors or missing information.
     </p>
   }
 
-  <app-button type="submit" [disabled]="!form.valid">Register</app-button>
+  <app-button type="submit" [disabled]="!form.valid" i18n>Register</app-button>
 </form>
