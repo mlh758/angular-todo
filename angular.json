@@ -12,8 +12,9 @@
       "i18n": {
         "sourceLocale": "en-US",
         "locales": {
-          "en": {
-            "translation": "src/locale/messages.en.xlf"
+          "fr": {
+            "translation": "src/locale/messages.fr.xlf",
+            "subPath": "fr"
           }
         }
       },
@@ -21,6 +22,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
+            "localize": true,
             "outputPath": "dist/ssr-example",
             "index": "src/index.html",
             "browser": "src/main.ts",

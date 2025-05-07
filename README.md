@@ -2,6 +2,36 @@
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.10.
 
+- [SsrExample](#ssrexample)
+  - [Purpose](#purpose)
+  - [Translations](#translations)
+  - [Development server](#development-server)
+  - [Code scaffolding](#code-scaffolding)
+  - [Building](#building)
+  - [Running unit tests](#running-unit-tests)
+  - [Additional Resources](#additional-resources)
+
+## Purpose
+
+This is an example application intended to show Angular 19 features such as
+signals. The goal is to fit as many examples of core Angular functionality in as
+possible to have basic reference implementations. I found that a lot of current
+examples, documentation, blog posts, etc, were focused on older patterns. I hope
+this proves useful for people looking for up to date examples.
+
+If you see something wrong, open an issue!
+
+The flow of the application is pretty basic. There is a welcome page, login,
+registration, and a task list. Once you have a session you can create and complete
+tasks. The app uses session storage and IndexedDB for persistence so it's all
+browser side.
+
+
+## Translations
+
+I'm still working on configuring the app to serve translations. Text extraction
+is working but I haven't yet figured out how to serve the other locales. Also, so far, ChatGPT crashes when trying to do translations.
+
 ## Development server
 
 To start a local development server, run:
@@ -41,18 +71,8 @@ This will compile your project and store the build artifacts in the `dist/` dire
 To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
 
 ```bash
-ng test
+npm run test
 ```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
 
 ## Additional Resources
 

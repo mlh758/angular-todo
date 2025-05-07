@@ -5,10 +5,11 @@ import { UserSignal } from '../../services/session.service';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { DatePipe } from '@angular/common';
 import { LoadingSpinnerComponent } from '../../components/loading-spinner/loading-spinner.component';
+import { TaskCompletionPipe } from '../../pipes/task-completion.pipe';
 
 @Component({
   selector: 'app-tasks',
-  imports: [RouterLink, DatePipe, LoadingSpinnerComponent],
+  imports: [RouterLink, DatePipe, LoadingSpinnerComponent, TaskCompletionPipe],
   templateUrl: './tasks.component.html',
   styleUrl: './tasks.component.css',
 })

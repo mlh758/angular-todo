@@ -1,6 +1,6 @@
-<h2>Create New Task</h2>
+<h2 i18n>Create New Task</h2>
 
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
+<form [formGroup]="form" (ngSubmit)="onSubmit()" i18n="Form to create a new task">
   <div>
     <label for="title">Title:</label>
     <input id="title" formControlName="title" required />
@@ -20,5 +20,5 @@
 </form>
 
 @if (submitError) {
-  <p>Failed to create task!</p>
+  <p i18n>Failed to create task!</p>
 }

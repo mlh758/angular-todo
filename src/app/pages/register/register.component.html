@@ -1,8 +1,8 @@
-<h2 i18n>Register</h2>
+<h2 i18n="Title of the registration form for a new account">Register</h2>
 
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <div>
-    <label for="name" i18n>Name:</label>
+    <label for="name" i18n="User's preferred name">Name:</label>
     <input id="name" formControlName="name" required />
   </div>
 
@@ -47,48 +47,48 @@
   <div>
     <label for="country" i18n>Country:</label>
     <select id="country" formControlName="country">
-      @for (country of countries; track country) {
-      <option [value]="country">{{ country }}</option>
+      @for (country of countries; track country.value) {
+      <option [value]="country.value">{{ country.label }}</option>
       }
     </select>
   </div>
 
-  <fieldset formGroupName="address">
-    <legend i18n>Address</legend>
+  <fieldset formGroupName="address" i18n="USA formatted fields for home address">
+    <legend>Address</legend>
     <div>
-      <label for="street" i18n>Street:</label>
+      <label for="street">Street:</label>
       <input id="street" formControlName="street" />
     </div>
     <div>
-      <label for="city" i18n>City:</label>
+      <label for="city">City:</label>
       <input id="city" formControlName="city" />
     </div>
     <div>
-      <label for="state" i18n>State:</label>
+      <label for="state">State:</label>
       <input id="state" formControlName="state" />
     </div>
     <div>
-      <label for="zip" i18n>Zip:</label>
+      <label for="zip">Zip:</label>
       <input id="zip" formControlName="zip" />
     </div>
   </fieldset>
 
-  <fieldset formGroupName="workAddress">
-    <legend i18n>Work Address</legend>
+  <fieldset formGroupName="workAddress" i18n="USA formatted fields for work address">
+    <legend>Work Address</legend>
     <div>
-      <label for="workStreet" i18n>Street:</label>
+      <label for="workStreet">Street:</label>
       <input id="workStreet" formControlName="street" />
     </div>
     <div>
-      <label for="workCity" i18n>City:</label>
+      <label for="workCity">City:</label>
       <input id="workCity" formControlName="city" />
     </div>
     <div>
-      <label for="workState" i18n>State:</label>
+      <label for="workState">State:</label>
       <input id="workState" formControlName="state" />
     </div>
     <div>
-      <label for="workZip" i18n>Zip:</label>
+      <label for="workZip">Zip:</label>
       <input id="workZip" formControlName="zip" />
     </div>
   </fieldset>
@@ -103,42 +103,42 @@
     }
   </fieldset>
 
-  <fieldset formGroupName="firstJob">
-    <legend i18n>First Job</legend>
+  <fieldset formGroupName="firstJob" i18n="Details about the user's first job/employment">
+    <legend>First Job</legend>
     <div>
-      <label for="firstJobTitle" i18n>Title:</label>
+      <label for="firstJobTitle">Title:</label>
       <input id="firstJobTitle" formControlName="title" />
     </div>
     <div>
-      <label for="firstJobCompany" i18n>Company:</label>
+      <label for="firstJobCompany">Company:</label>
       <input id="firstJobCompany" formControlName="company" />
     </div>
     <div>
-      <label for="firstJobStartDate" i18n>Start Date:</label>
+      <label for="firstJobStartDate">Start Date:</label>
       <input id="firstJobStartDate" type="date" formControlName="startDate" />
     </div>
     <div>
-      <label for="firstJobEndDate" i18n>End Date:</label>
+      <label for="firstJobEndDate">End Date:</label>
       <input id="firstJobEndDate" type="date" formControlName="endDate" />
     </div>
   </fieldset>
 
-  <fieldset formGroupName="currentJob">
-    <legend i18n>Current Job</legend>
+  <fieldset formGroupName="currentJob" i18n="Details about the user's current job/employment">
+    <legend>Current Job</legend>
     <div>
-      <label for="currentJobTitle" i18n>Title:</label>
+      <label for="currentJobTitle">Title:</label>
       <input id="currentJobTitle" formControlName="title" />
     </div>
     <div>
-      <label for="currentJobCompany" i18n>Company:</label>
+      <label for="currentJobCompany">Company:</label>
       <input id="currentJobCompany" formControlName="company" />
     </div>
     <div>
-      <label for="currentJobStartDate" i18n>Start Date:</label>
+      <label for="currentJobStartDate">Start Date:</label>
       <input id="currentJobStartDate" type="date" formControlName="startDate" />
     </div>
     <div>
-      <label for="currentJobEndDate" i18n>End Date:</label>
+      <label for="currentJobEndDate">End Date:</label>
       <input id="currentJobEndDate" type="date" formControlName="endDate" />
     </div>
   </fieldset>
@@ -177,5 +177,5 @@
     </p>
   }
 
-  <app-button type="submit" [disabled]="!form.valid" i18n>Register</app-button>
+  <app-button type="submit" [disabled]="!form.valid" i18n="Register button to submit the form">Register</app-button>
 </form>

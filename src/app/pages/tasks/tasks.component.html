@@ -4,7 +4,7 @@
 
 <table>
   <thead>
-    <tr i18n>
+    <tr i18n="Table header for tasks the user needs to complete">
       <th>Title</th>
       <th>Completed</th>
       <th>Due Date</th>
@@ -26,12 +26,12 @@
     @for (task of tasksResource.value(); track task.id) {
     <tr>
       <td>{{ task.title }}</td>
-      <td>{{ task.completed ? "Yes" : "No" }}</td>
+      <td>{{ task.completed | completionStatus}} </td>
       <td>{{task.dueDate | date}}</td>
       @if (task.completed) {
-      <td i18n>Done!</td>
+      <td i18n="Indicates the task is already complete">Done!</td>
       } @else {
-      <td><a i18n routerLink="/auth/tasks/{{ task.id }}">Complete!</a></td>
+      <td><a i18n="Action to navigate and complete a task" routerLink="/auth/tasks/{{ task.id }}">Complete!</a></td>
       }
     </tr>
     }

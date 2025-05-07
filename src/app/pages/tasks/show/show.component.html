@@ -1,8 +1,8 @@
-<h2>Task Details</h2>
+<h2 i18n="Heading for a details page about tasks">Task Details</h2>
 
 @if (taskRequest.hasValue()) {
   @let task = taskRequest.value();
-  <dl>
+  <dl i18n="Details of the current task in context">
     <dt>Title:</dt>
     <dd>{{ task.title }}</dd>
 

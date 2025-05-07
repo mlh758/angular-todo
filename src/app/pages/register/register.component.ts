@@ -89,8 +89,13 @@ export class RegisterComponent {
     return this.form.get('phoneNumbers') as FormArray;
   }
 
-  get countries(): CountryOptions[] {
-    return ['US', 'Canada', 'UK', 'Mexico'];
+  get countries(): { label: string; value: CountryOptions }[] {
+    return [
+      { label: $localize`United States`, value: 'US' },
+      { label: $localize`Canada`, value: 'Canada' },
+      { label: $localize`United Kingdom`, value: 'UK' },
+      { label: $localize`Mexico`, value: 'Mexico' },
+    ];
   }
 
   onSubmit() {
