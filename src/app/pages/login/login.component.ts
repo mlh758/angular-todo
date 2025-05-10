@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -11,6 +11,12 @@ import { UsersService } from '../../services/users.service';
 import { first } from 'rxjs';
 import { SessionService } from '../../services/session.service';
 
+/**
+ * We don't actually bother with passwords in this demo app so you log
+ * in with just a username.
+ *
+ * The component redirects away if the user becomes logged in.
+ */
 @Component({
   selector: 'app-login',
   imports: [RouterLink, ReactiveFormsModule, ButtonComponent],
@@ -27,6 +33,17 @@ export class LoginComponent {
   sessionService = inject(SessionService);
   router = inject(Router);
   unableToFindUser = false;
+
+  constructor() {
+    effect(() => {
+      // We do the check here in case the user naviagates back to this
+      // while already logged in.
+      const user = this.sessionService.currentUser();
+      if (user) {
+        this.router.navigate(['/auth/tasks']);
+      }
+    });
+  }
   onSubmit() {
     if (this.loginForm.valid) {
       const username = this.loginForm.getRawValue().username!;
@@ -34,7 +51,6 @@ export class LoginComponent {
       user$.subscribe((user) => {
         if (user) {
           this.sessionService.establishSession(user);
-          this.router.navigate(['/auth/tasks']);
         } else {
           this.unableToFindUser = true;
           setTimeout(() => {

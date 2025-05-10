@@ -19,9 +19,9 @@ export const UserSignal = new InjectionToken<Signal<User>>('UserSignal');
   providedIn: 'root',
 })
 export class SessionService {
-  _currentUser = signal<User | null>(null);
+  private _currentUser = signal<User | null>(null);
   currentUser = this._currentUser.asReadonly();
-  _trueUser = signal<User | null>(null);
+  private _trueUser = signal<User | null>(null);
   trueUser = this._trueUser.asReadonly();
 
   constructor() {

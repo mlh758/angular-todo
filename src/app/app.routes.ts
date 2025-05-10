@@ -10,6 +10,16 @@ import { ShowComponent as ShowTaskComponent } from './pages/tasks/show/show.comp
 import { ProfileComponent } from './pages/profile/profile.component';
 import { AdminComponent } from './pages/admin/admin.component';
 
+/**
+ * Define the routes for the application. You can enable `withComponentInputBinding`
+ * in the app config which will bind parameters to the component inputs automatically.
+ * I like this more than injecting ActivatedRoute and using the params observable.
+ *
+ * The catch is that it does not work for components rendered by the component the route
+ * renders. For example if ShowTaskComponent renders a child component, that child component
+ * will not have the id path segment automatically bound to it. You would have to either
+ * pass it explicitly or inject the ActivatedRoute.
+ */
 export const routes: Routes = [
   {
     path: 'auth',

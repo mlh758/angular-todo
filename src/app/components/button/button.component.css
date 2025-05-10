@@ -4,8 +4,13 @@
   padding: 5px 10px;
   color: white;
   border-radius: var(--radius-md);
+  width: var(--btn-width);
   cursor: pointer;
   margin-right: 10px;
+}
+
+:host {
+  width: var(--btn-width);
 }
 
 .button:hover {
@@ -23,6 +28,7 @@
 
 .secondary:hover {
     background-color: var(--button-secondary-hover-bg-color);
+    color: black;
 }
 
 .fullWidth {
