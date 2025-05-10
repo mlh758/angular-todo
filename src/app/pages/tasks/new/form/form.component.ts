@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TasksService, NewTask } from '../../../../services/tasks.service';
@@ -16,7 +16,7 @@ export class FormComponent {
   taskService = inject(TasksService);
   router = inject(Router);
   userSignal = inject(UserSignal);
-  submitError = false;
+  submitError = signal(false);
 
   form = this.fb.group({
     title: ['', Validators.required],
@@ -40,7 +40,7 @@ export class FormComponent {
       },
       error: (err) => {
         console.error('Error creating task:', err);
-        this.submitError = true;
+        this.submitError.set(true);
       },
     });
   }

@@ -40,8 +40,8 @@ describe('AdminComponent', () => {
 
     component.handleSubmit();
 
-    expect(component.error).toBe('userNotFound');
-    expect(component.submitting).toBeFalse();
+    expect(component.error()).toBe('userNotFound');
+    expect(component.submitting()).toBeFalse();
     expect(sessionServiceSpy.impersonate).not.toHaveBeenCalled();
   });
 
@@ -53,8 +53,8 @@ describe('AdminComponent', () => {
 
     component.handleSubmit();
 
-    expect(component.error).toBe('serverError');
-    expect(component.submitting).toBeFalse();
+    expect(component.error()).toBe('serverError');
+    expect(component.submitting()).toBeFalse();
     expect(sessionServiceSpy.impersonate).not.toHaveBeenCalled();
   });
 });

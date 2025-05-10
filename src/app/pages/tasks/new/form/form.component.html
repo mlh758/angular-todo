@@ -19,6 +19,6 @@
   <app-button type="submit" [disabled]="!form.valid">Create Task</app-button>
 </form>
 
-@if (submitError) {
+@if (submitError()) {
   <p i18n>Failed to create task!</p>
 }

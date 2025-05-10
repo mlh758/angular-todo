@@ -7,7 +7,7 @@
   </div>
   <app-button i18n type="submit" [disabled]="!loginForm.valid">Login</app-button>
 </form>
-@if(unableToFindUser) {
+@if(unableToFindUser()) {
 <aside>
   <p>
     <strong i18n>Unable to find user</strong>

@@ -29,14 +29,14 @@
     </select>
   </div>
 
-  @if(updateError) {
+  @if(updateError()) {
     <div class="error" i18n>
       An error occurred while updating your profile. Please try again.
     </div>
   }
   
 
-  <app-button type="submit" [disabled]="form.invalid || updating" i18n>
+  <app-button type="submit" [disabled]="form.invalid || updating()" i18n>
     Update Profile
   </app-button>
 </form>

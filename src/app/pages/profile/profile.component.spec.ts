@@ -59,8 +59,8 @@ describe('ProfileComponent', () => {
       email: 'new@fake.com',
       role: Role.ADMIN,
     });
-    expect(component.updating).toBeFalse();
-    expect(component.updateError).toBeFalse();
+    expect(component.updating()).toBeFalse();
+    expect(component.updateError()).toBeFalse();
     expect(mockSesionService.establishSession).toHaveBeenCalled();
   });
 });

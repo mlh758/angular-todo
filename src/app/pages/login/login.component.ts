@@ -1,4 +1,4 @@
-import { Component, effect, inject } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -32,7 +32,7 @@ export class LoginComponent {
   userService = inject(UsersService);
   sessionService = inject(SessionService);
   router = inject(Router);
-  unableToFindUser = false;
+  unableToFindUser = signal(false);
 
   constructor() {
     effect(() => {
@@ -52,9 +52,9 @@ export class LoginComponent {
         if (user) {
           this.sessionService.establishSession(user);
         } else {
-          this.unableToFindUser = true;
+          this.unableToFindUser.set(true);
           setTimeout(() => {
-            this.unableToFindUser = false;
+            this.unableToFindUser.set(false);
           }, 3000);
         }
       });

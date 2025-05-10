@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal, type WritableSignal } from '@angular/core';
 import { SessionService } from '../../services/session.service';
 import {
   FormControl,
@@ -24,8 +24,8 @@ type ErrorType = 'userNotFound' | 'serverError';
 export class AdminComponent {
   sessionService = inject(SessionService);
   usersService = inject(UsersService);
-  submitting = false;
-  error: ErrorType | null = null;
+  submitting = signal(false);
+  error: WritableSignal<ErrorType | null> = signal(null);
 
   form = new FormGroup({
     username: new FormControl('', {
@@ -39,20 +39,20 @@ export class AdminComponent {
       return;
     }
     const username = this.form.get('username')?.value!;
-    this.submitting = true;
+    this.submitting.set(true);
     this.usersService.find(username).subscribe({
       next: (user) => {
-        this.submitting = false;
+        this.submitting.set(false);
         if (user) {
           this.sessionService.impersonate(user);
         } else {
-          this.error = 'userNotFound';
+          this.error.set('userNotFound');
         }
       },
       error: (err) => {
         console.error('Error finding user:', err);
-        this.submitting = false;
-        this.error = 'serverError';
+        this.submitting.set(false);
+        this.error.set('serverError');
       },
     });
   }

@@ -64,6 +64,7 @@ hoping to eventually get to. Open an issue if you have something in mind.
 - [ ] Attribute directives
 - [ ] `@defer`
 - [ ] Deployment Dockerfile that serves multiple locales
+- [ ] Custom event payload ($event in the templates)
 
 ## Development server
 

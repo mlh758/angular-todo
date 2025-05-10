@@ -9,19 +9,19 @@
     <input  autofocus id="username" formControlName="username" required />
   </div>
 
-  @if (error === 'userNotFound') {
+  @if (error() === 'userNotFound') {
     <div class="error" i18n>
       User not found. Please check the username and try again.
     </div>
   }
 
-  @if (error === 'serverError') {
+  @if (error() === 'serverError') {
     <div class="error" i18n>
       An error occurred while searching for the user. Please try again later.
     </div>
   }
 
-  <app-button type="submit" [disabled]="form.invalid || submitting" i18n variant="secondary">
+  <app-button type="submit" [disabled]="form.invalid || submitting()" i18n variant="secondary">
     Search User
   </app-button>
 </form>

@@ -1,5 +1,15 @@
-import { Injectable, InjectionToken, Signal, signal } from '@angular/core';
+import {
+  DestroyRef,
+  inject,
+  Injectable,
+  InjectionToken,
+  Signal,
+  signal,
+} from '@angular/core';
 import { User } from './users.service';
+import { fromEvent, Subscription, tap } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Router } from '@angular/router';
 
 /**
  * Provides an alternative way to inject the current user directly.
@@ -7,6 +17,7 @@ import { User } from './users.service';
  * context
  */
 export const UserSignal = new InjectionToken<Signal<User>>('UserSignal');
+
 /**
  * Pretend this is an http service that fetches the current user from the server
  * based on a session cookie or a stored token.
@@ -22,13 +33,31 @@ export class SessionService {
   private _currentUser = signal<User | null>(null);
   currentUser = this._currentUser.asReadonly();
   private _trueUser = signal<User | null>(null);
+  destroyRef = inject(DestroyRef);
+  router = inject(Router);
+
   trueUser = this._trueUser.asReadonly();
 
+  storageChanges$: Subscription | null = null;
+
   constructor() {
+    // Some components are rendered server side and so window won't exist
     if (typeof window === 'undefined') {
       return;
     }
-    const storedUser = window.sessionStorage.getItem('currentUser');
+    fromEvent(window, 'storage')
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((event) => {
+        if (event instanceof StorageEvent && event.key === 'currentUser') {
+          const user = event.newValue ? JSON.parse(event.newValue) : null;
+          this.stopImpersonating();
+          if (!user) {
+            this.router.navigate(['/']);
+          }
+          this._currentUser.set(user);
+        }
+      });
+    const storedUser = window.localStorage.getItem('currentUser');
     if (storedUser) {
       this._currentUser.set(JSON.parse(storedUser));
     }
@@ -36,12 +65,12 @@ export class SessionService {
 
   establishSession(user: User) {
     this._currentUser.set(user);
-    window.sessionStorage.setItem('currentUser', JSON.stringify(user));
+    window.localStorage.setItem('currentUser', JSON.stringify(user));
   }
 
   destroySession() {
     this._currentUser.set(null);
-    window.sessionStorage.removeItem('currentUser');
+    window.localStorage.removeItem('currentUser');
   }
 
   impersonate(user: User) {
@@ -50,6 +79,9 @@ export class SessionService {
   }
 
   stopImpersonating() {
+    if (!this.isImpersonating()) {
+      return;
+    }
     this._currentUser.set(this._trueUser());
     this._trueUser.set(null);
   }

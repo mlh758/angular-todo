@@ -67,7 +67,7 @@ describe('LoginComponent', () => {
     fixture.detectChanges();
     expect(userServiceMock.find).toHaveBeenCalledWith('testuser');
     expect(routerMock.navigate).toHaveBeenCalledWith(['/auth/tasks']);
-    expect(component.unableToFindUser).toBeFalse();
+    expect(component.unableToFindUser()).toBeFalse();
   });
 
   it('should show an error if the user is not found', () => {
@@ -77,7 +77,7 @@ describe('LoginComponent', () => {
     component.onSubmit();
     fixture.detectChanges();
     expect(routerMock.navigate).not.toHaveBeenCalled();
-    expect(component.unableToFindUser).toBeTrue();
+    expect(component.unableToFindUser()).toBeTrue();
     const errorMessage = fixture.debugElement.query(By.css('strong'));
     expect(errorMessage.nativeElement.textContent).toContain('Unable to find');
   });

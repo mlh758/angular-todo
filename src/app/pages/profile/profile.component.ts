@@ -1,8 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SessionService, UserSignal } from '../../services/session.service';
 import { User, UsersService } from '../../services/users.service';
-import { mergeMap, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { ButtonComponent } from '../../components/button/button.component';
 
 /**
@@ -23,8 +23,8 @@ export class ProfileComponent {
   userService = inject(UsersService);
   sessionService = inject(SessionService);
   fb = inject(FormBuilder);
-  updating = false;
-  updateError = false;
+  updating = signal(false);
+  updateError = signal(false);
   existingRequest: Subscription | null = null;
 
   form = this.fb.group({
@@ -44,20 +44,20 @@ export class ProfileComponent {
         ...this.form.value,
         username: this.currentUser().username,
       } as User;
-      this.updating = true;
-      this.updateError = false;
+      this.updating.set(true);
+      this.updateError.set(false);
       // we disable the submit button while we work, but jut in case
       // we want to clear the previous request to ensure we don't update the session
       // with an old user object
       this.existingRequest?.unsubscribe();
       this.existingRequest = this.userService.update(updatedUser).subscribe({
         next: () => {
-          this.updating = false;
+          this.updating.set(false);
           this.sessionService.establishSession(updatedUser);
         },
         error: (err) => {
-          this.updating = false;
-          this.updateError = true;
+          this.updating.set(false);
+          this.updateError.set(true);
           console.error('Error updating user:', err);
         },
       });
