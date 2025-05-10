@@ -11,6 +11,7 @@ import { debounceTime, map, timeout } from 'rxjs';
 import { UsersService } from '../../services/users.service';
 import { Router } from '@angular/router';
 import { ButtonComponent } from '../../components/button/button.component';
+import { Role } from '../../services/storage.service';
 
 const JobGroup = {
   title: [''],
@@ -58,6 +59,7 @@ export class RegisterComponent {
       name: ['', Validators.required],
       username: ['', [Validators.required, Validators.minLength(5)]],
       email: ['', [Validators.required, Validators.email]],
+      role: [Role.USER, Validators.required],
       password: ['', Validators.minLength(12)],
       confirmPassword: ['', Validators.minLength(12)],
       country: CountrySelect,
@@ -108,6 +110,7 @@ export class RegisterComponent {
       username: userData.username!,
       name: userData.name!,
       email: userData.email!,
+      role: Role.USER,
     };
     if (!user.username || !user.name || !user.email) {
       return;
@@ -118,7 +121,7 @@ export class RegisterComponent {
       .subscribe({
         next: () => {
           console.log('User created successfully');
-          this.router.navigate(['/tasks']);
+          this.router.navigate(['/auth/tasks']);
           this.form.reset();
         },
         error: (err) => {

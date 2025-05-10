@@ -2,6 +2,17 @@
   <app-button><a class="logout-link" routerLink="/logout">Logout</a></app-button>
 </ng-template>
 
-<app-top-bar [actions]="actions"/>
+<app-top-bar [actions]="actions">
+  <div class="nav">
+    @if(user().role === 'admin') {
+      <a routerLink="/auth/admin">Admin</a>
+    }
+    <a routerLink="/auth/profile">Profile</a>
+    @if(isImpersonating()) {
+      <app-button (click)="stopImpersonating()">Stop Impersonation</app-button>
+    }
+  </div>
+  
+</app-top-bar>
 
 <router-outlet></router-outlet>

@@ -1,0 +1,42 @@
+<h2 i18n="Title of the profile update form">Welcome, {{ currentUser().name }}</h2>
+
+<form [formGroup]="form" (ngSubmit)="handleSubmit()">
+  <div>
+    <label for="name" i18n="User's preferred">Name:</label>
+    <input id="name" formControlName="name" required />
+  </div>
+
+  <div>
+    <label for="username" i18n>Username:</label>
+    <input id="username" formControlName="username" />
+  </div>
+
+  <div>
+    <label for="email" i18n>Email:</label>
+    <input id="email" type="email" formControlName="email" required />
+    @if (form.get('email')?.errors) {
+      <span  class="error" i18n>
+        Please enter a valid email address.
+      </span>
+    }
+  </div>
+
+  <div>
+    <label for="role" i18n>Role:</label>
+    <select id="role" formControlName="role" required>
+      <option value="user" i18n>User</option>
+      <option value="admin" i18n>Admin</option>
+    </select>
+  </div>
+
+  @if(updateError) {
+    <div class="error" i18n>
+      An error occurred while updating your profile. Please try again.
+    </div>
+  }
+  
+
+  <app-button type="submit" [disabled]="form.invalid || updating" i18n>
+    Update Profile
+  </app-button>
+</form>

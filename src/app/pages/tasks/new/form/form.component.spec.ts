@@ -5,18 +5,12 @@ import { of } from 'rxjs';
 
 import { FormComponent } from './form.component';
 import { TasksService } from '../../../../services/tasks.service';
-import { User } from '../../../../services/storage.service';
 import { UserSignal } from '../../../../services/session.service';
+import { mockUser } from '../../../../services/users.service';
 
 class MockTasksService {
   addTask = jasmine.createSpy('addTask').and.returnValue(of({}));
 }
-
-const mockUser: User = {
-  username: 'testuser',
-  name: 'Test User',
-  email: 'test@test.com',
-};
 
 describe('FormComponent', () => {
   let component: FormComponent;

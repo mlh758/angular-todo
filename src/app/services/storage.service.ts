@@ -26,10 +26,16 @@ export interface Task {
 
 export type NewTask = Omit<Task, 'id'>;
 
+export enum Role {
+  ADMIN = 'admin',
+  USER = 'user',
+}
+
 export interface User {
   username: string;
   name: string;
   email: string;
+  role: Role;
 }
 
 /**

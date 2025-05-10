@@ -1,5 +1,5 @@
 import { Injectable, InjectionToken, Signal, signal } from '@angular/core';
-import { User } from './storage.service';
+import { User } from './users.service';
 
 /**
  * Provides an alternative way to inject the current user directly.
@@ -21,6 +21,8 @@ export const UserSignal = new InjectionToken<Signal<User>>('UserSignal');
 export class SessionService {
   _currentUser = signal<User | null>(null);
   currentUser = this._currentUser.asReadonly();
+  _trueUser = signal<User | null>(null);
+  trueUser = this._trueUser.asReadonly();
 
   constructor() {
     if (typeof window === 'undefined') {
@@ -40,5 +42,25 @@ export class SessionService {
   destroySession() {
     this._currentUser.set(null);
     window.sessionStorage.removeItem('currentUser');
+  }
+
+  impersonate(user: User) {
+    this._trueUser.set(this.currentUser());
+    this._currentUser.set(user);
+  }
+
+  stopImpersonating() {
+    this._currentUser.set(this._trueUser());
+    this._trueUser.set(null);
+  }
+
+  isImpersonating(): boolean {
+    const currentUser = this._currentUser();
+    const trueUser = this._trueUser();
+    return (
+      currentUser !== null &&
+      trueUser !== null &&
+      currentUser.username !== trueUser.username
+    );
   }
 }

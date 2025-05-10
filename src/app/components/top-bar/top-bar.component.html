@@ -3,5 +3,8 @@
     <img i18n-alt ngSrc="/assets/logo.png" height="32" width="32" alt="Application logo" />
     <a class="home-link" routerLink="/" i18n="Name of the application, translate as literally as possible">Task Boss</a>
   </div>
+  <div class="spacer">
+    <ng-content></ng-content>
+  </div>
   <ng-container [ngTemplateOutlet]="actions()"></ng-container>
 </div>

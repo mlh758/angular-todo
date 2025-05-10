@@ -7,6 +7,8 @@ import { sessionResolver } from './resolvers/session.resolver';
 import { LogoutComponent } from './pages/logout/logout.component';
 import { FormComponent } from './pages/tasks/new/form/form.component';
 import { ShowComponent as ShowTaskComponent } from './pages/tasks/show/show.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { AdminComponent } from './pages/admin/admin.component';
 
 export const routes: Routes = [
   {
@@ -32,6 +34,16 @@ export const routes: Routes = [
         path: 'tasks/:id',
         component: ShowTaskComponent,
         title: 'Task',
+      },
+      {
+        path: 'profile',
+        component: ProfileComponent,
+        title: 'Profile',
+      },
+      {
+        path: 'admin',
+        component: AdminComponent,
+        title: 'Admin',
       },
     ],
   },

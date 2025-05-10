@@ -4,6 +4,7 @@ import {
   DATABASE_NAME,
   Store,
   provideTestDbName,
+  Role,
 } from './storage.service';
 import { toArray } from 'rxjs/operators';
 import { lastValueFrom } from 'rxjs';
@@ -36,6 +37,7 @@ describe('StorageService', () => {
       username: 'testuser',
       email: 'testuser@example.com',
       name: 'Test User',
+      role: Role.USER,
     };
     const tasks = [
       {

@@ -4,7 +4,7 @@ import { ShowComponent } from './show.component';
 import { Task, TasksService } from '../../../services/tasks.service';
 import { By } from '@angular/platform-browser';
 import { UserSignal } from '../../../services/session.service';
-import { User } from '../../../services/storage.service';
+import { mockUser } from '../../../services/users.service';
 
 const mockTask: Task = {
   user: 'testUser',
@@ -13,12 +13,6 @@ const mockTask: Task = {
   description: 'This is a test task',
   completed: false,
   dueDate: new Date(),
-};
-
-const mockUser: User = {
-  username: 'testUser',
-  name: 'Test User',
-  email: 'test@test.com',
 };
 
 describe('ShowComponent', () => {

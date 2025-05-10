@@ -29,8 +29,12 @@ browser side.
 
 ## Translations
 
-I'm still working on configuring the app to serve translations. Text extraction
-is working but I haven't yet figured out how to serve the other locales. Also, so far, ChatGPT crashes when trying to do translations.
+The app currently builds an English and French version. This is mostly because the
+[i18n](https://angular.dev/guide/i18n) documentation uses French and I know a few
+native French speakers who would likely get a laugh out of bad automated translations
+which is all I'm willing to do for this.
+
+I have not yet figured out how to actually _serve_ those translations though.
 
 ## Development server
 

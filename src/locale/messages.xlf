@@ -20,7 +20,7 @@
         <source>Task Boss</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/top-bar/top-bar.component.html</context>
-          <context context-type="linenumber">4,6</context>
+          <context context-type="linenumber">4,8</context>
         </context-group>
         <note priority="1" from="description">Name of the application, translate as literally as possible</note>
       </trans-unit>
@@ -265,28 +265,28 @@
         <source>United States</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/register/register.component.ts</context>
-          <context context-type="linenumber">94</context>
+          <context context-type="linenumber">95</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3486679398271885916" datatype="html">
         <source>Canada</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/register/register.component.ts</context>
-          <context context-type="linenumber">95</context>
+          <context context-type="linenumber">96</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7303091661854783304" datatype="html">
         <source>United Kingdom</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/register/register.component.ts</context>
-          <context context-type="linenumber">96</context>
+          <context context-type="linenumber">97</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8147072510678737075" datatype="html">
         <source>Mexico</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/register/register.component.ts</context>
-          <context context-type="linenumber">97</context>
+          <context context-type="linenumber">98</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6394920594556443752" datatype="html">

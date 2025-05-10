@@ -1,4 +1,14 @@
 .logout-link {
   color: white;
+}
+
+a {
   text-decoration: none;
+}
+
+.nav {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  align-items: center;
 }

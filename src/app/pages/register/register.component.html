@@ -22,6 +22,17 @@
     }
   </div>
 
+  <div>
+    <label for="role" i18n>Role:</label>
+    <select id="role" formControlName="role" required>
+      <option value="user" i18n>User</option>
+      <option value="admin" i18n>Admin</option>
+    </select>
+    @if (form.get('role')?.errors) {
+    <span class="error" i18n>Please select a role</span>
+    }
+  </div>
+
   <p i18n>
     Define a password of at least 12 characters.
   </p>

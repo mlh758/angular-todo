@@ -1,26 +1,24 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TasksComponent } from './tasks.component';
-import { provideTestDbName } from '../../services/storage.service';
+import { ProfileComponent } from './profile.component';
 import { UserSignal } from '../../services/session.service';
-import { ActivatedRoute } from '@angular/router';
 import { mockUser } from '../../services/users.service';
+import { provideTestDbName } from '../../services/storage.service';
 
-describe('TasksComponent', () => {
-  let component: TasksComponent;
-  let fixture: ComponentFixture<TasksComponent>;
+describe('ProfileComponent', () => {
+  let component: ProfileComponent;
+  let fixture: ComponentFixture<ProfileComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TasksComponent],
+      imports: [ProfileComponent],
       providers: [
-        provideTestDbName(),
         { provide: UserSignal, useValue: () => mockUser },
-        { provide: ActivatedRoute, useValue: {} },
+        provideTestDbName(),
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(TasksComponent);
+    fixture = TestBed.createComponent(ProfileComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

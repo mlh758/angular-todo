@@ -6,7 +6,6 @@
   background-color: #f8f9fa;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -30,4 +29,8 @@
   color: black;
   font-weight: 700;
   font-size: 1.25rem;
+}
+
+.spacer {
+  flex-grow: 1;
 }

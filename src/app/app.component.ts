@@ -1,6 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { DATABASE_NAME } from './services/storage.service';
 
 /**
  * AppComponent is referenced in the main.ts file and is used to bootstrap

@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TopBarComponent } from './top-bar.component';
 import { Component, TemplateRef, viewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   imports: [TopBarComponent],
@@ -23,6 +24,12 @@ describe('TopBarComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TopBarComponent, WrapperComponent],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {},
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(WrapperComponent);

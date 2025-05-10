@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { RedirectCommand, ResolveFn, Router } from '@angular/router';
 import { SessionService } from '../services/session.service';
-import { User } from '../services/storage.service';
+import { User } from '../services/users.service';
 
 /**
  * You can return async or observable from a resolver as well.

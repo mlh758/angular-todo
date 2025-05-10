@@ -1,0 +1,27 @@
+<h2 i18n="Title of the admin user search form">Admin Panel</h2>
+<p i18n="Describes that you can impersonate other users here">
+  You can use this panel to impersonate other users. Look them up by username.
+</p>
+
+<form [formGroup]="form" (ngSubmit)="handleSubmit()">
+  <div>
+    <label for="username" i18n>Username:</label>
+    <input  autofocus id="username" formControlName="username" required />
+  </div>
+
+  @if (error === 'userNotFound') {
+    <div class="error" i18n>
+      User not found. Please check the username and try again.
+    </div>
+  }
+
+  @if (error === 'serverError') {
+    <div class="error" i18n>
+      An error occurred while searching for the user. Please try again later.
+    </div>
+  }
+
+  <app-button type="submit" [disabled]="form.invalid || submitting" i18n>
+    Search User
+  </app-button>
+</form>
