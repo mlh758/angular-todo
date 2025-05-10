@@ -11,6 +11,10 @@ import { UsersService } from '../../services/users.service';
 
 type ErrorType = 'userNotFound' | 'serverError';
 
+/**
+ * This screen allows an admin to impersonate another user by entering their
+ * username.
+ */
 @Component({
   selector: 'app-admin',
   imports: [ReactiveFormsModule, ButtonComponent],
@@ -47,6 +51,7 @@ export class AdminComponent {
       },
       error: (err) => {
         console.error('Error finding user:', err);
+        this.submitting = false;
         this.error = 'serverError';
       },
     });
