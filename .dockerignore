@@ -1,0 +1,7 @@
+node_modules
+.git
+.vscode
+.angular
+dist
+.prettierrc
+README.md

@@ -4,6 +4,7 @@ This project was generated using [Angular CLI](https://github.com/angular/angula
 
 - [SsrExample](#ssrexample)
   - [Purpose](#purpose)
+  - [Setup](#setup)
   - [Translations](#translations)
   - [Project Structure](#project-structure)
   - [Tests](#tests)
@@ -33,6 +34,39 @@ application.
 The app uses session storage and IndexedDB for persistence so it's all
 browser side.
 
+## Setup
+
+This repository comes with a nix flake. Running `nix develop` should get you everything
+you need to run and build the Dockerfile.
+
+If you use Podman provided by the flake, you may need to add a policy.json at
+`/etc/containers/policy.json`. Here is an example:
+
+```
+{
+    "default": [
+        {
+            "type": "reject"
+        }
+    ],
+    "transports": {
+        "docker": {
+            "docker.io": [
+                {
+                    "type": "insecureAcceptAnything"
+                }
+            ]
+        }
+    }
+}
+```
+
+You will also need to tell Podman where to look for images. `~/.config/containers/registries.conf` serves that purpose. To use docker.io:
+
+```
+unqualified-search-registries = ["docker.io"]
+```
+
 ## Translations
 
 The app currently builds an English and French version. This is mostly because the
@@ -40,7 +74,8 @@ The app currently builds an English and French version. This is mostly because t
 native French speakers who would likely get a laugh out of bad automated translations
 which is all I'm willing to do for this.
 
-I have not yet figured out how to actually _serve_ those translations though.
+If you run the production version of the application out of dist, or via the provided
+Dockerfile you should have `en-US` and `fr` routes at the root of the application.
 
 ## Project Structure
 
